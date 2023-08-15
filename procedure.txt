@@ -1,0 +1,21 @@
+IT IS THE PROCEDURE HOW THE PROJECT IS STARTED 
+
+1) npx create-react-app app_name 
+2) now clear all the code present in src/app.js
+3) we make a folder name components which includes components like Navbar , News , Newsitem , Spinner. In public folder , index.html we included cdn of bootstrap to design and make responsive website
+4) we have used rcc react class component to render as there are two types rcc and rcf (react function component)
+5) Entered into Navbar.js 
+6) in react we don't use a href instead of a we use Link and for href we use to 
+
+
+
+
+
+
+
+8 April 2023
+`1) infinite scroll 
+    installed npm i react-infinite-scroll-component 
+    
+2) top loading bar 
+    npm i react-top-loading-bar

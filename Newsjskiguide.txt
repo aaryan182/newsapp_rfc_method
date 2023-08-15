@@ -1,0 +1,91 @@
+1)Importing necessary libraries and components:
+
+import React, { Component } from 'react';
+import NewsItem from './NewsItem';
+import Spinner from './Spinner';
+import InfiniteScroll from "react-infinite-scroll-component";
+import '../App.css';
+import PropTypes from 'prop-types';
+
+The code imports React, Component, NewsItem, Spinner, InfiniteScroll, PropTypes libraries/components and also a CSS file.
+
+2) Defining the News class component:
+
+export class News extends Component {
+  // component's defaultProps and propTypes
+  // ...
+}
+
+The code defines a class component named News, which extends the Component class provided by the React library. This component has defaultProps and propTypes defined, which ensure that the props passed in have the correct type and values.
+
+3) Defining a helper function:
+
+  capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+The code defines a helper function named capitalizeFirstLetter that capitalizes the first letter of a given string.
+
+4) Initializing the component's state in the constructor:
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      articles: [],
+      loading: true,
+      page: 1,
+      totalResults: 0
+    };
+    document.title = `${this.capitalizeFirstLetter(this.props.category)} - NewsFews`;
+  }
+
+The code initializes the component's state in the constructor, which includes an empty articles array, a loading flag that is set to true, the current page number, and the totalResults count. It also sets the document title with the capitalized category name and the "NewsFews" suffix.
+
+5) Fetching news articles in componentDidMount():
+
+  async componentDidMount() {
+    this.updateNews();
+  }
+
+The code calls the updateNews() method in the componentDidMount() lifecycle method, which fetches the news articles from the API and updates the component's state with the fetched data.
+
+6) Updating the state and fetching news articles:
+
+  async updateNews() {
+    this.props.setProgress(10);
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    this.setState({ loading: true });
+    let data = await fetch(url);
+    this.props.setProgress(30);
+    let parsedData = await data.json();
+    this.props.setProgress(60);
+    this.setState({
+      articles: parsedData.articles,
+      totalResults: parsedData.totalResults,
+      loading: false
+    })
+    this.props.setProgress(100);
+  }
+
+The code defines the updateNews() method, which first calls the setProgress() method passed in as a prop to update the progress bar, then it constructs the API endpoint URL using the props and state. It sets the loading flag to true, then fetches the news articles from the API using the fetch() method. It parses the fetched data using json(), sets the articles, totalResults, and loading state based on the parsed data, and finally, calls the setProgress() method again to update the progress bar.
+
+7) Handling previous and next page button clicks:
+
+  handlePrevClick = async () => {
+    this.setState({ page: this.state.page - 1 });
+    this.updateNews();
+  }
+
+  handle
+
+In the handlePrevClick method, the page state is decremented by 1, and the updateNews() method is called, which fetches the data for the previous page.
+In the handleNextClick method, the page state is incremented by 1, and the updateNews() method is called, which fetches the data for the next page.
+The fetchMoreData method is called when the user reaches the end of the current list of articles, and it fetches more articles from the API by incrementing the page state and concatenating the new articles to the existing list of articles.
+In the render method, a conditional rendering is used to show the Spinner component if the loading state is true.
+The InfiniteScroll component from the react-infinite-scroll-component library is used to implement infinite scrolling. It takes several props, including dataLength, which is the length of the current list of articles, next, which is the function that is called when the user reaches the end of the list, hasMore, which indicates whether there are more articles to fetch, and loader, which is the component that is shown when new articles are being fetched.
+Inside the InfiniteScroll component, a container div and a row div are used to create a grid layout for the articles.
+The map method is used to iterate over the articles array in the state and create a NewsItem component for each article. The title, description, imageUrl, newsUrl, author, and date props are passed to each NewsItem component.
+The NewsItem component displays the article title, description, image (if available), author, and date, and it also includes a link to the full article.
+Finally, the News component is exported as the default export of the module.
+
+
